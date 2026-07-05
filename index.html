@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tanishka </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400;1,9..144,600&family=Caveat:wght@500;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FAF6F0;
+    --paper-deep: #F1E8DC;
+    --ink: #2E2A26;
+    --ink-soft: #6B6259;
+    --rose: #B5768C;
+    --rose-soft: #DDBAC6;
+    --sage: #7C8B6F;
+    --gold: #C9A961;
+    --tape: #EFE7D6;
+    --shadow: rgba(46, 42, 38, 0.16);
+    --nav-h: 64px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before{
+    content:"";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,0.015) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(0,0,0,0.02) 0%, transparent 45%);
+    z-index: 0;
+  }
+
+  .wrap{ position: relative; z-index: 1; }
+  a{ color: var(--rose); }
+
+  h1, h2, h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+  }
+
+  section{ scroll-margin-top: var(--nav-h); }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    background: rgba(250, 246, 240, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(46,42,38,0.08);
+  }
+  .nav__brand{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav__brand .dot{ color: var(--rose); }
+  .nav__links{
+    display: flex;
+    gap: clamp(0.9rem, 2vw, 1.8rem);
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-left: 1rem;
+  }
+  .nav__links::-webkit-scrollbar{ display: none; }
+  .nav__links a{
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 6px 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .nav__links a:hover, .nav__links a:focus-visible{
+    color: var(--ink);
+    border-color: var(--rose-soft);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: calc(100vh - var(--nav-h));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6vh 6vw 8vh;
+    position: relative;
+  }
+  .hero__eyebrow{ opacity: 0; animation: rise 0.9s ease forwards; animation-delay: 0.1s; }
+  .hero h1{
+    font-size: clamp(2.4rem, 8vw, 5.6rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.08;
+    max-width: 17ch;
+    margin: 0.5rem 0 1.3rem;
+    color: var(--ink);
+  }
+  .hero h1 .accent{ color: var(--rose); font-weight: 600; }
+  .hero .word{
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em);
+    animation: rise 0.8s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .hero p.sub{
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: rise 0.9s ease forwards;
+    animation-delay: 1.4s;
+  }
+  @keyframes rise{ to{ opacity: 1; transform: translateY(0); } }
+
+  .scroll-cue{
+    position: absolute;
+    bottom: 5vh; left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: rise 1s ease forwards, bob 2.4s ease-in-out 2.2s infinite;
+    animation-delay: 1.9s, 2.2s;
+  }
+  .scroll-cue svg{ width: 22px; height: 34px; }
+  @keyframes bob{ 0%,100%{ transform: translate(-50%, 0); } 50%{ transform: translate(-50%, 8px); } }
+
+  /* ---------- brushstroke divider ---------- */
+  .brush-divider{ display: flex; justify-content: center; padding: 1vh 0 5vh; }
+  .brush-divider svg{ width: min(420px, 70vw); height: 40px; overflow: visible; }
+  .brush-divider path{
+    fill: none; stroke: var(--rose); stroke-width: 8; stroke-linecap: round;
+    stroke-dasharray: 480; stroke-dashoffset: 480;
+    transition: stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .brush-divider.in-view path{ stroke-dashoffset: 0; }
+
+  /* ---------- LETTER ---------- */
+  .letter{ max-width: 700px; margin: 0 auto; padding: 2vh 7vw 8vh; }
+  .letter__card{
+    background: var(--paper);
+    border: 1px solid rgba(46,42,38,0.08);
+    padding: clamp(2rem, 6vw, 4rem) clamp(1.6rem, 6vw, 3.6rem);
+    box-shadow: 0 30px 60px -30px var(--shadow);
+    position: relative;
+  }
+  .letter__card::before{
+    content:""; position: absolute; top: -14px; left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 90px; height: 34px; background: var(--tape); opacity: 0.9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  }
+  .letter h2{ font-size: clamp(1.5rem, 4vw, 2.1rem); font-style: italic; margin-bottom: 1.5rem; }
+  .letter p{
+    font-size: 1.06rem; line-height: 1.85; margin: 0 0 1.3rem;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .letter p.in-view{ opacity: 1; transform: translateY(0); }
+  .letter .signoff{ font-family: 'Caveat', cursive; font-size: 2rem; color: var(--rose); margin-top: 1.8rem; }
+
+  /* ---------- LITTLE THINGS ---------- */
+  .things-intro{ text-align: center; padding: 3vh 6vw 1vh; }
+  .things-intro h2{ font-size: clamp(1.8rem, 5vw, 2.6rem); font-style: italic; }
+  .things-intro p{ font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--ink-soft); margin-top: 0.5rem; }
+  .things{
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.4rem; max-width: 980px; margin: 0 auto; padding: 3vh 6vw 9vh;
+  }
+  .thing{
+    background: var(--paper-deep); border-left: 3px solid var(--rose-soft);
+    padding: 1.4rem 1.5rem; opacity: 0; transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .thing.in-view{ opacity: 1; transform: translateY(0); }
+  .thing p{ margin: 0; font-size: 1rem; line-height: 1.7; }
+
+  /* ---------- ABOUT HER ---------- */
+  .about{
+    max-width: 900px; margin: 0 auto; padding: 4vh 6vw 10vh;
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(1.6rem, 5vw, 3.2rem);
+    align-items: center;
+  }
+  .about__portrait{
+    aspect-ratio: 4/5; background: var(--paper-deep);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    position: relative; width: 100%;
+  }
+  .about__portrait.placeholder{
+    border: 1.5px dashed rgba(46,42,38,0.28);
+    background-image: conic-gradient(from 160deg at 70% 30%, var(--sage), var(--gold) 45%, var(--rose-soft) 80%, var(--sage));
+  }
+  img.about__portrait{ object-fit: cover; display: block; }
+  .about__portrait span{
+    font-size: 0.78rem; letter-spacing: 0.06em;
+    background: rgba(250,246,240,0.85); padding: 0.35rem 0.7rem;
+  }
+  .about__text .eyebrow{ margin-bottom: 0.6rem; }
+  .about__text h2{ font-size: clamp(1.6rem, 4vw, 2.2rem); font-style: italic; margin-bottom: 1rem; }
+  .about__text p{ font-size: 1.02rem; line-height: 1.85; color: var(--ink); margin: 0 0 1rem; }
+
+  @media (max-width: 640px){
+    .about{ grid-template-columns: 1fr; }
+    .about__portrait{ max-width: 260px; margin: 0 auto; }
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-intro{ text-align: center; padding: 3vh 6vw 1vh; }
+  .gallery-intro h2{ font-size: clamp(1.8rem, 5vw, 2.8rem); font-style: italic; }
+  .gallery-intro p{ font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--ink-soft); margin-top: 0.5rem; }
+  .gallery{
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.4rem 2rem; max-width: 1100px; margin: 0 auto; padding: 3vh 6vw 10vh;
+  }
+  .frame{
+    margin: 0; display: flex; flex-direction: column; align-items: center;
+    transform: rotate(var(--rot, 0deg)); opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .frame.in-view{ opacity: 1; }
+  .frame:nth-child(1){ --rot: -2.5deg; } .frame:nth-child(2){ --rot: 1.6deg; }
+  .frame:nth-child(3){ --rot: -1deg; } .frame:nth-child(4){ --rot: 2.2deg; }
+  .frame:nth-child(5){ --rot: -1.8deg; } .frame:nth-child(6){ --rot: 1.2deg; }
+  .frame:hover{ transform: rotate(0deg) translateY(-6px) scale(1.02); }
+  .frame__inner{
+    width: 100%; aspect-ratio: 4/5; background: var(--paper-deep);
+    box-shadow: 0 18px 34px -18px var(--shadow), 0 2px 6px rgba(0,0,0,0.06);
+    padding: 10px 10px 30px 10px; position: relative;
+  }
+  img.frame__inner{ object-fit: cover; display: block; }
+  .frame__inner::before{
+    content:""; position: absolute; top: -10px; left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 46px; height: 20px; background: var(--tape); opacity: 0.85;
+  }
+  .placeholder{
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    text-align: center; border: 1.5px dashed rgba(46,42,38,0.28);
+    background-color: var(--paper-deep);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cpath d='M22 34C22 25 31 20 37 27C43 20 52 25 52 34C52 43 37 53 37 53C37 53 22 43 22 34Z' fill='none' stroke='%23B5768C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.45'/%3E%3Cpath d='M85 100q9-13 18 0q9 13 18 0' fill='none' stroke='%237C8B6F' stroke-width='2' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cpath d='M112 24l4 9l9 3l-9 3l-4 9l-4-9l-9-3l9-3Z' fill='none' stroke='%23C9A961' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.45'/%3E%3Cpath d='M15 95q4-6 8 0' fill='none' stroke='%23B5768C' stroke-width='1.6' stroke-linecap='round' stroke-opacity='0.35'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+  }
+  .placeholder__content{ display: flex; flex-direction: column; align-items: center; gap: 0.55rem; }
+  .placeholder__icon{ width: 52px; height: 52px; color: var(--rose); opacity: 0.85; transform: rotate(-4deg); }
+  .placeholder__label{
+    font-size: 0.76rem; letter-spacing: 0.05em; color: var(--ink);
+    background: rgba(250,246,240,0.85); padding: 0.35rem 0.7rem;
+  }
+  figcaption, .frame__caption{ font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--ink-soft); margin-top: 0.8rem; text-align: center; }
+
+  a.frame{ text-decoration: none; color: var(--ink); cursor: pointer; }
+  .frame__badge{
+    position: absolute; bottom: 6px; right: 6px;
+    width: 32px; height: 32px; border-radius: 48% 52% 45% 55% / 55% 45% 58% 42%;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.14);
+    transform: rotate(-7deg);
+  }
+  .frame__badge svg{ width: 15px; height: 15px; }
+  .frame__watch{
+    font-size: 0.7rem; letter-spacing: 0.05em; color: var(--ink-soft);
+    text-align: center; margin-top: 0.15rem; text-transform: uppercase;
+  }
+
+  /* ---------- NEXT CANVAS ---------- */
+  .next-canvas{ max-width: 620px; margin: 0 auto; padding: 1vh 6vw 9vh; text-align: center; }
+  .next-canvas__card{ background: var(--paper-deep); padding: clamp(2rem, 6vw, 3rem); position: relative; box-shadow: 0 24px 50px -28px var(--shadow); }
+  .next-canvas__card::before{
+    content:""; position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%) rotate(3deg); width: 70px; height: 26px;
+    background: var(--tape); opacity: 0.85;
+  }
+  .next-canvas h3{ font-size: 1.4rem; font-style: italic; margin-bottom: 0.8rem; }
+  .next-canvas p{ font-size: 1rem; line-height: 1.8; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- CONTACT / SOCIALS ---------- */
+  .contact{ text-align: center; padding: 4vh 6vw 6vh; }
+  .contact .eyebrow{ margin-bottom: 0.6rem; }
+  .contact h2{ font-size: clamp(1.8rem, 5vw, 2.6rem); font-style: italic; margin-bottom: 2rem; }
+  .contact__card{
+    max-width: 360px; margin: 0 auto; background: var(--paper-deep);
+    padding: 2rem 1.6rem; box-shadow: 0 20px 40px -24px var(--shadow);
+    text-decoration: none; color: var(--ink); display: block;
+    transition: transform 0.3s ease;
+  }
+  .contact__card:hover{ transform: translateY(-4px); }
+  .contact__icon{
+    width: 72px; height: 72px; margin: 0 auto 1rem;
+    border-radius: 48% 52% 45% 55% / 55% 45% 58% 42%;
+    background-color: var(--paper-deep);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cpath d='M14 22C14 15 21 11 26 16C31 11 38 15 38 22C38 29 26 37 26 37C26 37 14 29 14 22Z' fill='none' stroke='%23B5768C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.4'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+    border: 1.8px solid var(--rose-soft);
+    display: flex; align-items: center; justify-content: center;
+    transform: rotate(-2deg);
+  }
+  .contact__icon svg{ width: 30px; height: 30px; color: var(--ink); }
+  .contact__icon--eyes{ color: var(--rose); }
+  .contact__icon--eyes svg{ width: 40px; height: 26px; color: var(--rose); }
+  .contact__card strong{ font-family: 'Fraunces', serif; font-style: italic; font-size: 1.15rem; display: block; }
+  .contact__card span{ font-size: 0.88rem; color: var(--ink-soft); }
+
+  /* ---------- CLOSING ---------- */
+  .closing{ text-align: center; padding: 6vh 6vw 10vh; max-width: 640px; margin: 0 auto; }
+  .closing h2{ font-size: clamp(1.7rem, 5vw, 2.5rem); font-style: italic; line-height: 1.3; }
+  .closing .accent{ color: var(--rose); }
+  .closing .from{ margin-top: 1.8rem; font-family: 'Caveat', cursive; font-size: 1.9rem; color: var(--ink-soft); }
+
+  footer{
+    text-align: center; padding: 2.5vh 6vw 5vh; font-size: 0.72rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+    .hero .word, .hero__eyebrow, .hero p.sub, .scroll-cue{ opacity: 1 !important; transform: none !important; }
+    .letter p, .frame, .thing{ opacity: 1 !important; transform: none !important; }
+    .brush-divider path{ stroke-dashoffset: 0 !important; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--rose); outline-offset: 3px; }
+
+  .music-shell{
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(250, 246, 240, 0.9);
+    border: 1px solid rgba(46, 42, 38, 0.12);
+    box-shadow: 0 14px 30px -18px rgba(46, 42, 38, 0.35);
+    backdrop-filter: blur(8px);
+  }
+  .music-shell__label{ font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+  .music-shell__button{
+    border: 0;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background: var(--rose);
+    color: white;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .music-player{ position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: 0; }
+</style>
+</head>
+<body>
+<svg style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true">
+  <defs>
+    <symbol id="sk-heart" viewBox="0 0 70 62">
+      <path d="M35 56C33 54 8 38 6 20C5 10 14 4 22 6C28 7 33 12 35 18C37 12 42 7 48 6C56 4 65 10 64 20C62 38 37 54 35 56Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M35 56C33 54 9 39 7 21" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.5"/>
+    </symbol>
+    <symbol id="sk-palette" viewBox="0 0 80 70">
+      <path d="M40 4C60 4 76 18 76 34C76 50 62 61 47 59C43 58 42 54 45 51C48 48 46 44 41 44C20 44 4 34 4 23C4 12 20 4 40 4Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="20" cy="21" r="4" fill="currentColor" opacity="0.55"/>
+      <circle cx="34" cy="13" r="4" fill="currentColor" opacity="0.55"/>
+      <circle cx="50" cy="15" r="4" fill="currentColor" opacity="0.55"/>
+      <circle cx="60" cy="27" r="4" fill="currentColor" opacity="0.55"/>
+    </symbol>
+    <symbol id="sk-eyes" viewBox="0 0 100 56">
+      <path d="M6 30C14 15 34 13 40 28C34 38 14 40 6 30Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="23" cy="28" r="3.8" fill="currentColor"/>
+      <path d="M60 28C66 13 86 15 94 30C86 40 66 38 60 28Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="77" cy="28" r="3.8" fill="currentColor"/>
+      <path d="M4 18l-4-4M9 14l-2-5M15 12l0-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M96 18l4-4M91 14l2-5M85 12l0-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="wrap">
+  <div class="music-shell" aria-live="polite">
+    <span class="music-shell__label" id="musicStatus">Tap to play music</span>
+    <button class="music-shell__button" id="musicToggle" type="button" aria-label="Toggle background music">▶</button>
+  </div>
+  <div id="musicAudio" class="music-player" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <a href="#top" class="nav__brand">for T<span class="dot">.</span></a>
+    <div class="nav__links">
+      <a href="#letter">Letter</a>
+      <a href="#things">Little Things</a>
+      <a href="#about">About Her</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#eyes">Her Eyes</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ---------- HERO ---------- -->
+  <section class="hero" id="top">
+    <div class="eyebrow hero__eyebrow">for Tanishka</div>
+    <h1>
+      <span class="word" style="animation-delay:.3s">A</span>
+      <span class="word" style="animation-delay:.4s">small</span>
+      <span class="word" style="animation-delay:.5s">place</span>
+      <span class="word" style="animation-delay:.6s">for</span>
+      <span class="word accent" style="animation-delay:.7s">your paintings</span>
+    </h1>
+    <p class="sub">made by Parag (with love obviously), so this exists even when time doesn't</p>
+    <div class="scroll-cue" aria-hidden="true">
+      <svg viewBox="0 0 22 34" fill="none">
+        <rect x="1" y="1" width="20" height="32" rx="10" stroke="#6B6259" stroke-width="1.4"/>
+        <circle cx="11" cy="10" r="2.6" fill="#B5768C"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="brush-divider" data-reveal>
+    <svg viewBox="0 0 420 40"><path d="M8 28 C 100 4, 180 40, 260 16 S 380 30, 412 12"/></svg>
+  </div>
+
+  <!-- ---------- LETTER ---------- -->
+  <section class="letter" id="letter">
+    <div class="letter__card">
+      <h2>Dear Tanishka,</h2>
+
+      <p data-reveal>I've seen you with a paintbrush in your hand enough times to know it's not just something you do when you're bored. It's the thing that makes sense to you when a lot of other things don't.</p>
+
+      <p data-reveal>I also know you haven't had much time for it lately. Work, life, everything else that fills up a day, it adds up, and painting is usually the first thing that gets pushed to "later." I get it. I'm not going to pretend I have a fix for that.</p>
+
+      <p data-reveal>What I could do is make sure your paintings have a place that isn't just a phone gallery or a folder you forget about. So this is that. No pressure to fill it up fast, no deadline. Just somewhere real for the work you've already done, and space for whatever comes next, whenever next actually happens.</p>
+
+      <p data-reveal>Take your time with it. This page isn't going anywhere.</p>
+
+      <p class="signoff">— Parag</p>
+    </div>
+  </section>
+
+  <div class="brush-divider" data-reveal>
+    <svg viewBox="0 0 420 40"><path d="M8 28 C 100 4, 180 40, 260 16 S 380 30, 412 12"/></svg>
+  </div>
+
+  <!-- ---------- LITTLE THINGS ---------- -->
+  <section id="things">
+    <div class="things-intro">
+      <div class="eyebrow">observations</div>
+      <h2>Little things I've noticed</h2>
+      <p>a running list, still growing</p>
+    </div>
+
+    <div class="things">
+      <div class="thing" data-reveal><p>You apologise for your paintings before anyone's even seen them, and it's usually still the best thing in the room.</p></div>
+      <div class="thing" data-reveal><p>You'll redo one detail four times over something nobody else would notice. That's not perfectionism, that's just care.</p></div>
+      <div class="thing" data-reveal><p>You remember colours by where you saw them, not just what they're called.</p></div>
+      <div class="thing" data-reveal><p>You get genuinely happy seeing other people's art do well. No competitiveness in it, just respect.</p></div>
+      <div class="thing" data-reveal><p>You talk yourself out of showing people your favourite pieces. Those are usually the ones I remember longest.</p></div>
+      <div class="thing" data-reveal><p>You notice light and shadow on ordinary days like most people wouldn't bother to.</p></div>
+    </div>
+  </section>
+
+  <!-- ---------- ABOUT HER ---------- -->
+  <section class="about" id="about">
+    <img class="about__portrait" src="https://i.postimg.cc/3JBwK1q3/565179879-18075122513469191-3471211599244020854-n.jpg" alt="Tanishka">
+    <div class="about__text">
+      <div class="eyebrow">the artist</div>
+      <h2>Tanishka paints.</h2>
+      <p>Not digital, not filtered, actual paint on actual canvas. Brushes, mixing colours by hand, the kind of work that takes real time and doesn't always cooperate.</p>
+      <p>Lately that time has been hard to find. This site doesn't fix that. It's just a place that'll be ready whenever she is, holding her paintings the way they deserve to be held: seen, kept, not lost in a camera roll.</p>
+    </div>
+  </section>
+
+  <div class="brush-divider" data-reveal>
+    <svg viewBox="0 0 420 40"><path d="M8 28 C 100 4, 180 40, 260 16 S 380 30, 412 12"/></svg>
+  </div>
+
+  <!-- ---------- GALLERY ---------- -->
+  <section id="gallery">
+    <div class="gallery-intro">
+      <div class="eyebrow">a wall, just for her</div>
+      <h2>Her gallery</h2>
+      <p>this is where the actual paintings go</p>
+    </div>
+
+    <!-- GALLERY MARKUP STARTS HERE — swap the two "add painting" placeholders for real images when ready -->
+    <div class="gallery">
+      <a class="frame" data-reveal href="https://www.instagram.com/p/DX4cy-kklwG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer">
+        <div class="frame__inner placeholder">
+          <div class="placeholder__content">
+            <svg class="placeholder__icon" viewBox="0 0 70 62" aria-hidden="true"><use href="#sk-heart"/></svg>
+            <span class="placeholder__label">view on Instagram</span>
+          </div>
+          <span class="frame__badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E2A26" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </span>
+        </div>
+        <span class="frame__caption">the one that started it all</span>
+        <span class="frame__watch">tap to view</span>
+      </a>
+
+      <a class="frame" data-reveal href="https://www.instagram.com/reel/DYg_YQPSz15/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer">
+        <div class="frame__inner placeholder">
+          <div class="placeholder__content">
+            <svg class="placeholder__icon" viewBox="0 0 70 62" aria-hidden="true"><use href="#sk-heart"/></svg>
+            <span class="placeholder__label">view on Instagram</span>
+          </div>
+          <span class="frame__badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E2A26" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </span>
+        </div>
+        <span class="frame__caption">the one that says more than it means to</span>
+        <span class="frame__watch">tap to view</span>
+      </a>
+
+     
+    </div>
+    <!-- GALLERY MARKUP ENDS HERE -->
+  </section>
+
+  <div class="next-canvas" style="padding-top:0;">
+    <div class="next-canvas__card">
+      <h3>About that 2nd above one</h3>
+      <p data-reveal>You leave the room first when it feels like it's not your turn to be picked. I know why, and I don't love that you've had to learn that habit. But here's the deal: if you're not in the room, I'm not either. And if anything ever tries to make that a competition, I'll handle it, Hulk-mode and all, then hand you the calm explanation after, Einstein-style. You don't have to double check where you stand with me.</p>
+    </div>
+  </div>
+
+  <div class="brush-divider" data-reveal>
+    <svg viewBox="0 0 420 40"><path d="M8 28 C 100 4, 180 40, 260 16 S 380 30, 412 12"/></svg>
+  </div>
+
+  <!-- ---------- HER EYES ---------- -->
+  <section id="eyes">
+    <div class="letter" style="padding-top: 1vh;">
+      <div class="letter__card">
+        <h2>About your eyes</h2>
+        <p data-reveal>I've tried to say this properly a few times and never got it right, so here's the plain version: your eyes give you away before you say a word. When you're proud of something you won't admit to. When you're trying not to laugh at something you shouldn't find funny. When you're annoyed but haven't decided if you're going to say so yet. Most people compliment eyes for how they look. I like yours for what they say.</p>
+        <a class="contact__card" href="https://www.instagram.com/reel/DZ0Rmwvv33x/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer" style="margin-top: 1.6rem; position: relative;">
+          <div class="contact__icon contact__icon--eyes" aria-hidden="true">
+            <svg viewBox="0 0 100 56"><use href="#sk-eyes"/></svg>
+          </div>
+          <span class="frame__badge" aria-hidden="true" style="position: absolute; top: 10px; right: 10px; bottom: auto;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E2A26" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </span>
+          <strong>this one</strong>
+          <span>tap to watch</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="next-canvas">
+    <div class="next-canvas__card">
+      <h3>For your next canvas</h3>
+      <p data-reveal>Whenever you get to it, no rush. It doesn't have to be your best work. It just has to be yours.</p>
+    </div>
+  </div>
+
+  <div class="brush-divider" data-reveal>
+    <svg viewBox="0 0 420 40"><path d="M8 28 C 100 4, 180 40, 260 16 S 380 30, 412 12"/></svg>
+  </div>
+
+  <!-- ---------- CONTACT / SOCIALS ---------- -->
+  <section class="contact" id="contact">
+    <div class="eyebrow">find her here</div>
+    <h2>More of her work</h2>
+    <a class="contact__card" href="https://www.instagram.com/tanuoncam/" target="_blank" rel="noopener noreferrer">
+      <div class="contact__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2E2A26" stroke-width="1.6">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.2" cy="6.8" r="1"/>
+        </svg>
+      </div>
+      <strong>@tanuoncam</strong>
+      <span>see more on Instagram</span>
+    </a>
+  </section>
+
+  <!-- ---------- CLOSING ---------- -->
+  <section class="closing">
+    <h2>Whenever you pick the brush back up,<br>this page will be <span class="accent">ready</span> for it.</h2>
+    <p class="from">— Mr. Parag ?</p>
+  </section>
+
+  <footer>made with care, one small site at a time</footer>
+
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('[data-reveal], .letter p, .frame, .thing');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  revealEls.forEach(el => observer.observe(el));
+
+  const musicToggle = document.getElementById('musicToggle');
+  const musicStatus = document.getElementById('musicStatus');
+  const musicAudio = document.getElementById('musicAudio');
+  let musicPlaying = false;
+  let audioContext = null;
+  let melodyTimer = null;
+  let melodyIndex = 0;
+
+  function updateMusicUi(isPlaying) {
+    musicPlaying = isPlaying;
+    musicToggle.textContent = isPlaying ? '⏸' : '▶';
+    musicStatus.textContent = isPlaying ? 'Music playing' : 'Tap to play music';
+  }
+
+  function stopMusic() {
+    if (melodyTimer) {
+      window.clearTimeout(melodyTimer);
+      melodyTimer = null;
+    }
+    if (audioContext && audioContext.state !== 'closed') {
+      audioContext.suspend().catch(() => {});
+    }
+    updateMusicUi(false);
+    musicStatus.textContent = 'Music paused';
+  }
+
+  function startMusic() {
+    if (musicPlaying) return;
+
+    if (!audioContext) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) {
+        musicStatus.textContent = 'Audio is not supported on this browser';
+        return;
+      }
+      audioContext = new AudioCtx();
+    }
+
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().catch(() => {});
+    }
+
+    const masterGain = audioContext.createGain();
+    masterGain.gain.value = 0.025;
+    masterGain.connect(audioContext.destination);
+
+    const melody = [261.63, 329.63, 392.0, 329.63, 293.66, 261.63, 246.94, 220.0];
+
+    const playNextNote = () => {
+      if (!musicPlaying) return;
+
+      const note = melody[melodyIndex % melody.length];
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = note;
+      gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.03, audioContext.currentTime + 0.02);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.45);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(masterGain);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.5);
+
+      melodyIndex += 1;
+      melodyTimer = window.setTimeout(playNextNote, 550);
+    };
+
+    updateMusicUi(true);
+    melodyIndex = 0;
+    playNextNote();
+  }
+
+  function toggleMusic() {
+    if (musicPlaying) {
+      stopMusic();
+    } else {
+      startMusic();
+    }
+  }
+
+  musicToggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleMusic();
+  });
+
+  document.addEventListener('pointerdown', () => {
+    if (!musicPlaying) {
+      startMusic();
+    }
+  }, { capture: true });
+  document.addEventListener('touchstart', () => {
+    if (!musicPlaying) {
+      startMusic();
+    }
+  }, { capture: true, passive: true });
+</script>
+</body>
+</html>
